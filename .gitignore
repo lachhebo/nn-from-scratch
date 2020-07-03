@@ -1,4 +1,4 @@
 dev-env/
 nn_from_scratch.egg-info
 *__pycache__/
-.idea/misc.xml
+.idea/

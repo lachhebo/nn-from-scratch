@@ -1,0 +1,2 @@
+class InputSizeError(Exception):
+    pass
