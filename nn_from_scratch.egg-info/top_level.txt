@@ -1,1 +1,1 @@
-nn_from_scratch
+nn-from-scratch
