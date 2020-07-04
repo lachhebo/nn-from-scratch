@@ -1,7 +1,0 @@
-setup.py
-nn-from-scratch/__init__.py
-nn-from-scratch/layer.py
-nn_from_scratch.egg-info/PKG-INFO
-nn_from_scratch.egg-info/SOURCES.txt
-nn_from_scratch.egg-info/dependency_links.txt
-nn_from_scratch.egg-info/top_level.txt

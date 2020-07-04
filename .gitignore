@@ -2,3 +2,5 @@ dev-env/
 nn_from_scratch.egg-info
 *__pycache__/
 .idea/
+nn_from_scratch.egg-info/
+*.pyc
