@@ -1,22 +1,23 @@
 # on peut fournir au réseaux de neurone un ensemble de batch pris aléatoirement avec "sampling".
+from nn_from_scratch.batch_generator import BatchGenerator
 
 
 def test_generator_batch_return_length_of_dataframe_on_one_epoch():
     # given
-    dataset = [[4,3], [3,3], [1,1], [0,1], [0,0]]
+    dataset = [[4, 3], [3, 3], [1, 1], [0, 1], [0, 0]]
     batch_size = 2
-    batchgenerator = BatchGenerator(batch_size,dataset)
-    expected_iteration_number = len(dataset) % batch_size 
+    batchgenerator = BatchGenerator(dataset, batch_size)
+    batchgenerator.new_epoch()
+    expected_iteration_number = len(dataset) // batch_size
     expected_len = expected_iteration_number * batch_size
 
     # when 
     output_len = 0
-    iteration_number  = 0
-    while batchgenerator.is_next_batch() :
-        ouput_len += len(batchgenerator.next_batch())
-        iteration_number += 1
 
+    while batchgenerator.is_next_batch():
+        batch = list(batchgenerator.next_batch())
+        print(batch)
+        output_len += len(batch)
 
     # then
-    assert ouput_len == expected_len
-    assert iteration_number == expected_iteration_number
+    assert output_len == expected_len
