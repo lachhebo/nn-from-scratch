@@ -6,8 +6,8 @@ def test_generator_batch_return_length_of_dataframe_on_one_epoch():
     dataset = [[4,3], [3,3], [1,1], [0,1], [0,0]]
     batch_size = 2
     batchgenerator = BatchGenerator(batch_size,dataset)
-    expected_len = 5
     expected_iteration_number = len(dataset) % batch_size 
+    expected_len = expected_iteration_number * batch_size
 
     # when 
     output_len = 0
