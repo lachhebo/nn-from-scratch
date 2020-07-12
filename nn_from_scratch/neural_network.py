@@ -13,3 +13,5 @@ class NeuralNetwork(object):
         for layer in self.layers:
             input_vector = layer.forward(input_vector)
         return input_vector
+
+    def backpropagation(self, ):

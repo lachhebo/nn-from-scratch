@@ -15,7 +15,6 @@ def test_generator_batch_return_length_of_dataframe_on_one_epoch():
 
     while batchgenerator.is_next_batch():
         batch = list(batchgenerator.next_batch())
-        print(batch)
         output_len += len(batch)
 
     # then

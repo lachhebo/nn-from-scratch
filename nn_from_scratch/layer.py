@@ -18,7 +18,7 @@ class Layer:
         self.__neuron_activations = None
 
     @property
-    def weights(self)-> List[List[float]]:
+    def weights(self) -> List[List[float]]:
         return self.__weights
 
     @property
@@ -29,6 +29,10 @@ class Layer:
     def activation_function(self):
         return self.__activation_function
 
+    @property
+    def neuron_activations(self):
+        return self.__neuron_activations
+
     @weights.setter
     def weights(self, weights):
         self.__weights = weights
@@ -38,18 +42,21 @@ class Layer:
         self.__bias = bias
 
     def generate_weight_matrix(self):
-        self.__weights = [[rand(-1, 1) for i in range(self.__input_size)] for j in range(self.__number_neuron)]
+        self.__weights = [[rand(-1, 1) for i in range(self.__input_size)] for j
+                          in range(self.__number_neuron)]
         self.__bias = [rand(-1, 1) for _ in range(self.__number_neuron)]
         return self
 
     def forward(self, input_vector: List[float]) -> List:
         if len(input_vector) != self.__input_size:
             raise InputSizeError
-        output_res = []
+        neuron_activations = []
         for i in range(self.__number_neuron):
             calculation_neuron = 0
             for j in range(self.__input_size):
-                calculation_neuron += input_vector[j]*self.__weights[i][j]
-            output_value = self.activation_function.compute_function(calculation_neuron + self.bias[i])
-            output_res.append(output_value)
-        return output_res
+                calculation_neuron += input_vector[j] * self.__weights[i][j]
+            output_value = self.activation_function.compute_function(
+                calculation_neuron + self.bias[i])
+            neuron_activations.append(output_value)
+        self.__neuron_activations = neuron_activations
+        return neuron_activations
