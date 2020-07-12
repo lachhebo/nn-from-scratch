@@ -5,25 +5,23 @@ from nn_from_scratch.layer import Layer
 from nn_from_scratch.exception import InputSizeError
 
 
-def test_layer_should_raise_error_if_input_size_if_different_than_size_layer():
+def test_size_input_is_equal_to_size_of_weights_for_each_neuron():
     # given
-    layer = Layer(3)()
-    input_data = [9, 8]
+    input_size = 2
+    layer = Layer(3, input_size = 2).generate_weight_matrix()
 
-    # when
-    with pytest.raises(InputSizeError):
-        # then
-        layer.forward(input_data)
-
+    # then
+    for neuron_weights in layer.weights:
+        assert len(neuron_weights) == input_size
 
 def test_layer_output_in_forward_pass_must_be_mathematically_correct_taking_weights_and_bias():
     # given
-    layer = Layer(3)
-    layer.weights = [1, 5, 1]
-    layer.bias = 5
+    layer = Layer(3, input_size=2)
+    layer.weights = [[1,1], [1,2], [0,0]]
+    layer.bias = [1,0,0]
+    input_vector = [2, 3]
 
-    input_vector = [2, 3, 2]
-    expected_output = [7, 20, 7]
+    expected_output = [6, 8, 0]
 
     # when
     actual_output = layer.forward(input_vector)

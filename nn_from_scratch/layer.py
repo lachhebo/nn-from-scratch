@@ -7,19 +7,22 @@ from random import uniform as rand
 
 class Layer:
     def __init__(self,
-                 size_weights: int,
+                 number_neuron: int,
+                 input_size: int,
                  activation_function: ActivationFunction = ConstantFunction):
-        self.__size = size_weights
+        self.__number_neuron = number_neuron
+        self.__input_size = input_size
         self.__weights = None
         self.__bias = None
         self.__activation_function = activation_function
+        self.__neuron_activations = None
 
     @property
-    def weights(self):
+    def weights(self)-> List[List[float]]:
         return self.__weights
 
     @property
-    def bias(self):
+    def bias(self) -> List[float]:
         return self.__bias
 
     @property
@@ -34,20 +37,19 @@ class Layer:
     def bias(self, bias):
         self.__bias = bias
 
-    def __call__(self, *args, **kwargs):
-        self.__weights = [rand(-1, 1) for i in range(self.__size)]
-        self.__bias = rand(-1, 1)
+    def generate_weight_matrix(self):
+        self.__weights = [[rand(-1, 1) for i in range(self.__input_size)] for j in range(self.__number_neuron)]
+        self.__bias = [rand(-1, 1) for _ in range(self.__number_neuron)]
         return self
 
     def forward(self, input_vector: List[float]) -> List:
-        if len(input_vector) != len(self.weights):
-            raise InputSizeError(
-                'The input size must be the same than the weight')
+        if len(input_vector) != self.__input_size:
+            raise InputSizeError
         output_res = []
-        for weight, input_value in zip(self.weights, input_vector):
-            calculation_neuron = weight * input_value + self.bias
-            output_res.append(
-                self.activation_function.compute_function(
-                    calculation_neuron)
-            )
+        for i in range(self.__number_neuron):
+            calculation_neuron = 0
+            for j in range(self.__input_size):
+                calculation_neuron += input_vector[j]*self.__weights[i][j]
+            output_value = self.activation_function.compute_function(calculation_neuron + self.bias[i])
+            output_res.append(output_value)
         return output_res
